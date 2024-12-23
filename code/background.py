@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 import pygame
 
 
@@ -10,7 +7,7 @@ class Background:
         try:
             # Carregar a imagem de grama
             grass = pygame.image.load(grass_image).convert_alpha()
-            # Calcular a nova largura da grama para cobrir a tela (manter a proporção original)
+            # Calcular a nova largura da grama para cobrir a tela
             grass_width = screen_width
             # Manter a proporção original da imagem
             aspect_ratio = grass.get_width() / grass.get_height()
@@ -55,18 +52,17 @@ class Background:
         self.positions = self.initial_positions.copy()
 
     def reset(self):
-        """Reinicia as posições e velocidades do fundo."""
+        #3Reinicia as posições e velocidades do fundo.
         self.grass_positions = self.initial_grass_positions.copy()
         self.positions = self.initial_positions.copy()
         self.grass_speed = self.scroll_speed
 
     def set_scroll_speed(self, speed):
-        """Ajusta a velocidade de rolagem."""
+        # Ajusta a velocidade de rolagem.
         self.scroll_speed = speed
         self.grass_speed = speed
 
     def update(self):
-        """Atualiza as posições para simular movimento."""
         # Atualizar posições da grama
         new_grass_positions = []
         for x, y in self.grass_positions:
@@ -83,7 +79,6 @@ class Background:
                 self.positions[i] -= self.screen_height * len(self.road_images)
 
     def render(self, screen):
-        """Renderiza o fundo de grama e as imagens de estrada."""
         # Renderizar a grade de grama
         for x, y in self.grass_positions:
             screen.blit(self.grass_piece, (x, y))

@@ -1,18 +1,11 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 import pygame
+
 
 class Player:
     def __init__(self, x, y, speed, screen_width, screen_height):
-        """
-        Inicializa o jogador com uma posição inicial, velocidade e redimensionamento da imagem.
 
-        :param x: Posição inicial do jogador na coordenada X.
-        :param y: Posição inicial do jogador na coordenada Y.
-        :param speed: A velocidade do jogador.
-        :param screen_width: A largura da tela para redimensionar a imagem.
-        :param screen_height: A altura da tela para redimensionar a imagem.
-        """
+        # Inicializa o jogador com uma posição inicial, velocidade e redimensionamento da imagem.
+
         self.x = x
         self.y = y
         self.speed = speed
@@ -29,26 +22,27 @@ class Player:
         # Largura da estrada (60% da largura da tela)
         self.road_width = int(screen_width * 0.6)
 
-        # Limite esquerdo da estrada com uma margem um pouco reduzida
+        # Limite esquerdo da estrada
         self.road_left = (screen_width - self.road_width) // 2 + int(self.road_width * 0.05)
 
-        # Limite direito da estrada com uma margem maior para permitir mais movimento
-        # Aumenta um pouco a margem direita
         self.road_right = self.road_left + self.road_width - self.rect.width + 20  # Aumenta 20px no limite direito
 
         # Ajustando a posição inicial do carro para garantir que ele comece dentro da estrada
         # Ajuste da posição horizontal (esquerda/direita)
-        self.rect.x = max(self.rect.x, self.road_left)  # Garante que o carro comece dentro do limite esquerdo da estrada
-        self.rect.x = min(self.rect.x, self.road_right - self.rect.width)  # Garante que o carro comece dentro do limite direito da estrada
+        self.rect.x = max(self.rect.x,
+                          self.road_left)  # Garante que o carro comece dentro do limite esquerdo da estrada
+        self.rect.x = min(self.rect.x,
+                          self.road_right - self.rect.width)  # Garante que o carro comece dentro do limite direito da estrada
 
         # Ajuste da posição vertical (cima/baixo)
         self.rect.y = max(self.rect.y, 0)  # Garante que o carro não comece fora da tela para cima
-        self.rect.y = min(self.rect.y, screen_height - self.rect.height)  # Garante que o carro não comece fora da tela para baixo
+        self.rect.y = min(self.rect.y,
+                          screen_height - self.rect.height)  # Garante que o carro não comece fora da tela para baixo
 
     def update(self):
-        """
-        Atualiza a posição do jogador com base nas teclas pressionadas, com restrições para não sair da estrada.
-        """
+
+        # Atualiza a posição do jogador com base nas teclas pressionadas, com restrições para não sair da estrada.
+
         keys = pygame.key.get_pressed()
 
         # Movimentação horizontal com restrição dentro da estrada
@@ -64,15 +58,13 @@ class Player:
             self.rect.y += self.speed
 
     def render(self, screen):
-        """
-        Desenha a imagem do jogador na tela na posição atual.
-        """
+        # Desenha a imagem do jogador na tela na posição atual.
+
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
     def reset_position(self):
-        """
-        Reseta a posição do jogador para a posição inicial.
-        """
+        # Reseta a posição do jogador para a posição inicial.
+
         # Define a posição inicial do jogador dentro dos limites da estrada
         self.rect.x = self.road_left + (self.road_width - self.rect.width) // 2  # Centraliza o carro dentro da estrada
         self.rect.y = self.screen_height - self.rect.height - 10  # Coloca o carro na parte inferior da tela

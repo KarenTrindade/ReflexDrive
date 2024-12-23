@@ -37,37 +37,36 @@ class GameManager:
 
         # Adicionar sons
         pygame.mixer.init()
-        self.game_music = "assets/sounds/Game.mp3"  # Substitua pelo caminho do som para o estado "jogo"
-
+        self.game_music = "assets/sounds/Game.mp3"
     def play_game_music(self):
-        """Toca o som de fundo do jogo."""
+        # Toca o som de fundo do jogo.
         pygame.mixer.music.load(self.game_music)
         pygame.mixer.music.set_volume(0.5)
         pygame.mixer.music.play(-1)  # Toca em loop
 
     def stop_music(self):
-        """Para qualquer música que esteja tocando."""
+        # Para qualquer música que esteja tocando.
         pygame.mixer.music.stop()
     def increase_game_speed(self):
-        """Aumenta a velocidade do jogo gradualmente."""
+        # Aumenta a velocidade do jogo gradualmente.
         if not self.is_slowed:
             self.game_speed += self.speed_increase_rate
             self.game_speed = min(self.game_speed, self.max_game_speed)  # Limita a velocidade máxima
 
     def apply_slow_bonus(self, duration):
-        """Aplica o efeito de desaceleração temporária."""
+        # Aplica o efeito de desaceleração temporária.
         self.is_slowed = True
         self.slow_end_time = pygame.time.get_ticks() + duration
         self.game_speed = max(1, self.game_speed * 0.5)  # Reduz a velocidade pela metade, com limite mínimo de 1
 
     def update_game_speed(self):
-        """Atualiza a velocidade do jogo, verificando se o efeito de desaceleração terminou."""
+        # Atualiza a velocidade do jogo, verificando se o efeito de desaceleração terminou.
         if self.is_slowed and pygame.time.get_ticks() > self.slow_end_time:
             self.is_slowed = False
         self.increase_game_speed()
 
     def apply_bonus(self, bonus):
-        """Aplica o efeito de um bônus ao jogador."""
+        # Aplica o efeito de um bônus ao jogador.
         if bonus.type == "slow":
             self.apply_slow_bonus(duration=5000)  # 5 segundos de efeito
         elif bonus.type == "double":
@@ -102,7 +101,7 @@ class GameManager:
             self.bonus_spawn_time = current_time
 
     def run_game(self):
-        """Lógica principal do jogo."""
+        # Lógica principal do jogo.
         if not self.game_over:
             self.update_game_speed()  # Atualiza a velocidade global
             self.spawn_obstacles_and_bonuses()
@@ -117,7 +116,7 @@ class GameManager:
 
             # Atualiza, desenha e remove obstáculos
             for obstacle in self.obstacles[:]:
-                if obstacle.update(self.game_speed):  # Saiu da tela, usa game_speed
+                if obstacle.update(self.game_speed):
                     self.obstacles.remove(obstacle)
                     self.existing_objects.remove(obstacle)
                     self.score += 1
@@ -128,13 +127,13 @@ class GameManager:
                 if obstacle.check_collision(self.player):
                     self.game_over = True
                     self.current_state = "fim"  # Altera o estado para "fim" quando houver colisão
-                    self.render_game_over_screen()  # Renderiza imediatamente a tela de Game Over
-                    break  # Garanta que não há mais atualizações após o game over
+                    self.render_game_over_screen()
+                    break
 
-            # Atualiza, desenha e remove bônus (somente se o jogo não tiver terminado)
+            # Atualiza, desenha e remove bônus
             if not self.game_over:
                 for bonus in self.bonuses[:]:
-                    if bonus.update(self.game_speed):  # Saiu da tela, usa game_speed
+                    if bonus.update(self.game_speed):
                         self.bonuses.remove(bonus)
                         self.existing_objects.remove(bonus)
 
@@ -155,18 +154,16 @@ class GameManager:
         elif self.game_over:  # Renderiza a tela de Game Over
             self.render_game_over_screen()
 
-    import pygame
-
     def render_game_over_screen(self):
-        """Renderiza a tela de Game Over com imagem, texto e pontuação final."""
+        # Renderiza a tela de Game Over com imagem, texto e pontuação final.
 
         # Tocar música de fundo para a tela de Game Over
-        pygame.mixer.music.load("assets/sounds/GameOver.mp3")  # Substitua pelo seu arquivo de som
-        pygame.mixer.music.set_volume(0.5)  # Define o volume da música (opcional)
+        pygame.mixer.music.load("assets/sounds/GameOver.mp3")
+        pygame.mixer.music.set_volume(0.5)  # Define o volume da música
         pygame.mixer.music.play(-1)  # Toca a música em loop
 
         # Imagem de fundo para a tela de Game Over
-        game_over_image = pygame.image.load("assets/images/backgrounds/Water_Tile.png")  # Substitua pela sua imagem
+        game_over_image = pygame.image.load("assets/images/backgrounds/Water_Tile.png")
         game_over_image = pygame.transform.scale(game_over_image, (WIDTH, HEIGHT))
 
         # Preenche toda a tela com a imagem de fundo
@@ -191,13 +188,8 @@ class GameManager:
         pygame.display.flip()
 
     def create_non_overlapping_object(self, create_function, *args):
-        """
-        Cria um objeto (obstáculo ou bônus) que não se sobrepõe a objetos existentes.
+        # Cria um objeto (obstáculo ou bônus) que não se sobrepõe a objetos existentes.
 
-        :param create_function: Função de criação de objetos (ex.: create_random_obstacle).
-        :param args: Argumentos para a função de criação.
-        :return: Objeto criado.
-        """
         max_attempts = 10  # Limite de tentativas para evitar sobreposição
         for _ in range(max_attempts):
             new_object = create_function(*args)
@@ -207,7 +199,7 @@ class GameManager:
         raise RuntimeError("Não foi possível criar um objeto sem sobreposição.")
 
     def handle_events(self):
-        """Gerencia os eventos do jogo."""
+        # Gerencia os eventos do jogo.
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -238,7 +230,7 @@ class GameManager:
                         self.stop_music()  # Para o som do fim e volta ao menu
 
     def reset_game(self):
-        """Reinicia o estado do jogo."""
+        # Reinicia o estado do jogo.
         self.game_over = False
         self.current_state = "jogo"
         self.score = 0
@@ -249,8 +241,9 @@ class GameManager:
 
         self.stop_music()  # Garante que o som antigo pare
         self.play_game_music()  # Reinicia o som do jogo
+
     def update(self):
-        """Atualiza o estado do jogo."""
+        # Atualiza o estado do jogo.
         self.handle_events()
 
         if self.current_state == "menu":

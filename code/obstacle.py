@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 import pygame
 import random
 
@@ -12,17 +9,8 @@ class Obstacle:
     }
 
     def __init__(self, type, x, y, screen_width, screen_height, speed=2, scale_factors=None):
-        """
-        Inicializa um obstáculo com tipo, posição, velocidade e redimensionamento de imagem.
+        # Inicializa um obstáculo com tipo, posição, velocidade e redimensionamento de imagem.
 
-        :param type: Tipo do obstáculo (ex: "car" ou "cone").
-        :param x: Posição inicial do obstáculo no eixo X.
-        :param y: Posição inicial do obstáculo no eixo Y.
-        :param screen_width: Largura da tela (não usado diretamente, mas necessário para instância futura).
-        :param screen_height: Altura da tela para controle de remoção.
-        :param speed: Velocidade de movimento do obstáculo (padrão: 2).
-        :param scale_factors: Dicionário com fatores de escala para os tipos de obstáculos.
-        """
         self.type = type
         self.x = x
         self.y = y
@@ -54,44 +42,28 @@ class Obstacle:
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
 
     def update(self, game_speed):
-        """
-        Atualiza a posição do obstáculo e verifica se ele saiu da tela.
 
-        :param game_speed: Velocidade global do jogo que afeta o movimento do obstáculo.
-        :return: True se o obstáculo saiu da tela; caso contrário, False.
-        """
+        # Atualiza a posição do obstáculo e verifica se ele saiu da tela.
+
         self.y += self.speed + game_speed  # Movimenta o obstáculo com base na velocidade do jogo
         self.rect.y = self.y
         return self.y > self.screen_height
 
     def render(self, screen):
-        """
-        Desenha o obstáculo na tela.
 
-        :param screen: Superfície de exibição do jogo.
-        """
+        # Desenha o obstáculo na tela.
+
         screen.blit(self.image, self.rect)
 
     def check_collision(self, player):
-        """
-        Verifica a colisão entre o obstáculo e o jogador.
+        # Verifica a colisão entre o obstáculo e o jogador.
 
-        :param player: Objeto do jogador.
-        :return: True se houver colisão; caso contrário, False.
-        """
         return self.rect.colliderect(player.rect)
 
 
 def create_random_obstacle(screen_width, screen_height, road_x_min, road_x_max):
-    """
-    Cria um obstáculo em uma posição aleatória restrita à área da estrada.
+    # Cria um obstáculo em uma posição aleatória restrita à área da estrada.
 
-    :param screen_width: Largura da tela.
-    :param screen_height: Altura da tela.
-    :param road_x_min: Limite mínimo X da estrada.
-    :param road_x_max: Limite máximo X da estrada.
-    :return: Instância da classe Obstacle.
-    """
     # Escolhe aleatoriamente o tipo de obstáculo
     obstacle_type = random.choice(["car", "car2"])
 

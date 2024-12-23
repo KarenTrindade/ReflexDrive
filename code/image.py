@@ -1,5 +1,6 @@
 import pygame
 
+
 class Image:
     def __init__(self, file_path: str, width: int, height: int):
         self.file_path = file_path
@@ -9,5 +10,5 @@ class Image:
         self.image = pygame.transform.scale(self.image, (self.width, self.height))  # Redimensiona a imagem
 
     def render(self, screen, x, y):
-        """Desenha a imagem na tela na posição (x, y)"""
+        # Desenha a imagem na tela na posição (x, y)
         screen.blit(self.image, (x, y))

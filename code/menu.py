@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 import pygame
 from config import WIDTH, HEIGHT
 
@@ -13,7 +11,7 @@ class Menu:
             pygame.image.load("assets/images/backgrounds/menu_4.png").convert_alpha()
         ]
         self.font = pygame.font.SysFont("bahnschrift", 55, bold=True)
-        self.options = ["Iniciar", "Score", "Sair"]
+        self.options = ["Iniciar", "Sair"]
         self.selected_option = 0
 
         # Carrega a imagem central (96x96)
@@ -24,13 +22,12 @@ class Menu:
         )
 
         # Adiciona o som de fundo do menu
-        pygame.mixer.music.load("assets/sounds/Menu.mp3")  # Substitua pelo caminho correto
+        pygame.mixer.music.load("assets/sounds/Menu.mp3")
         pygame.mixer.music.set_volume(0.5)  # Define o volume
 
 
     def render_background(self):
-        """Renderiza o fundo com imagens organizadas como um quebra-cabeça."""
-
+        # Renderiza o fundo com imagens organizadas como um quebra-cabeça.
         positions = [
             (0, 0),  # Posição para part1.png
             (400, 0),  # Posição para part2.png
@@ -44,12 +41,12 @@ class Menu:
             self.screen.blit(scaled_img, pos)
 
     def render_menu(self):
-        """Renderiza o menu com a imagem central, título em gradiente e opções de texto."""
+        # Renderiza o menu com a imagem central, título em gradiente e opções de texto.
         # Tocar música de fundo se ainda não estiver tocando
         if not pygame.mixer.music.get_busy():
             pygame.mixer.music.play(-1)  # Loop infinito
 
-        self.render_background()  # Renderiza o fundo cinza asfalto
+        self.render_background()
 
         # Calcular a posição da imagem central
         center_x = WIDTH // 2 - self.center_image.get_width() // 2
@@ -60,7 +57,7 @@ class Menu:
 
         # Gerar o texto "Reflex Drive" com gradiente
         title_surface = self.create_text_gradient(
-            "Reflex Drive", title_font, (50, 205, 50), (255, 215, 0)  # Gradiente laranja para vermelho
+            "Reflex Drive", title_font, (50, 205, 50), (255, 215, 0)
         )
         title_x = WIDTH // 2 - title_surface.get_width() // 2
         title_y = center_y - 120  # Posicionar acima da imagem central
@@ -73,7 +70,7 @@ class Menu:
 
         # Renderizar o texto do menu abaixo da imagem central
         for index, option in enumerate(self.options):
-            color = (255, 255, 0) if index == self.selected_option else (255, 255, 255)  # Amarelo para selecionado
+            color = (255, 255, 0) if index == self.selected_option else (255, 255, 255)
             option_text = self.font.render(option, True, color)
 
             # Calcular a posição do texto para ficar sobre a imagem
@@ -83,17 +80,11 @@ class Menu:
             self.screen.blit(option_text, (text_x, text_y))
 
     def create_text_gradient(self, text, font, color_top, color_bottom):
-        """
-        Cria um texto com gradiente de cor.
 
-        :param text: O texto a ser renderizado.
-        :param font: Fonte do texto.
-        :param color_top: Cor inicial do gradiente (R, G, B).
-        :param color_bottom: Cor final do gradiente (R, G, B).
-        :return: Uma superfície Pygame com o texto renderizado com gradiente.
-        """
+        # Cria um texto com gradiente de cor.
+
         # Renderizar o texto com cor sólida apenas para pegar as dimensões
-        text_surface = font.render(text, True, (255, 255, 255))  # Branco temporário
+        text_surface = font.render(text, True, (255, 255, 255))
         width, height = text_surface.get_size()
 
         # Criar uma superfície transparente
@@ -112,7 +103,7 @@ class Menu:
         return gradient_surface
 
     def handle_input(self, event):
-        """Lida com a entrada do usuário para navegação no menu."""
+        # Lida com a entrada do usuário para navegação no menu.
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 self.selected_option = (self.selected_option - 1) % len(self.options)
@@ -122,8 +113,6 @@ class Menu:
                 if self.options[self.selected_option] == "Iniciar":
                     pygame.mixer.music.stop()  # Para a música ao iniciar o jogo
                     return "jogo"  # Troca para o estado do jogo
-                elif self.options[self.selected_option] == "Score":
-                    return "score"  # Retorna "score" para exibir o placar
                 elif self.options[self.selected_option] == "Sair":
                     pygame.mixer.music.stop()  # Para a música ao sair
                     pygame.quit()
