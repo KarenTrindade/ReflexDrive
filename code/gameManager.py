@@ -238,6 +238,7 @@ class GameManager:
         self.bonuses.clear()
         self.existing_objects.clear()
         self.player.reset_position()
+        self.game_speed = 1.5
 
         self.stop_music()  # Garante que o som antigo pare
         self.play_game_music()  # Reinicia o som do jogo
