@@ -1,4 +1,5 @@
 import pygame
+import sys
 import random
 from config import WIDTH, HEIGHT
 from code.player import Player
@@ -203,7 +204,8 @@ class GameManager:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                exit()
+                sys.exit()
+
             elif event.type == pygame.KEYDOWN:
                 if self.current_state == "menu":
                     result = self.menu.handle_input(event)
@@ -218,7 +220,7 @@ class GameManager:
 
                     elif result == "sair":
                         pygame.quit()
-                        exit()
+                        sys.exit()
                 elif self.current_state == "jogo" and event.key == pygame.K_ESCAPE:
                     self.current_state = "menu"
                     self.stop_music()  # Para o som do jogo

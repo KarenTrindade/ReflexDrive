@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 from code.gameManager import GameManager
 from code.menu import Menu
@@ -28,3 +30,5 @@ while running:
 
 # Encerramento do Pygame
 pygame.quit()
+sys.exit()
+
