@@ -11,12 +11,6 @@ class Bonus:
 
         # Inicializa um bônus no jogo.
 
-        # :para type: Tipo do bônus (ex.: "double", "slow").
-        # :para x: Posição X inicial do bônus.
-        # :para y: Posição Y inicial do bônus.
-        # :para screen_width: Largura da tela.
-        # :para screen_height: Altura da tela.
-        # :para speed: Velocidade de movimento do bônus.
 
         self.type = type  # Tipo do bônus
         self.x = x  # Posição X

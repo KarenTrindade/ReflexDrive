@@ -1,4 +1,5 @@
 import pygame
+import sys
 from config import WIDTH, HEIGHT
 
 class Menu:
@@ -116,5 +117,5 @@ class Menu:
                 elif self.options[self.selected_option] == "Sair":
                     pygame.mixer.music.stop()  # Para a música ao sair
                     pygame.quit()
-                    exit()
+                    sys.exit()
         return "menu"  # Retorna ao menu

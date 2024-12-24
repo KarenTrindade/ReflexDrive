@@ -1,6 +1,5 @@
-import sys
-
 import pygame
+import sys
 from code.gameManager import GameManager
 from code.menu import Menu
 from config import WIDTH, HEIGHT
